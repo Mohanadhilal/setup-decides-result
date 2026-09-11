@@ -1,0 +1,6 @@
+group,matched_pairs,d_G_total,d_extraction,learned_ahead,p_pairs,p_within_run
+"MPC, cold cluster",14 of 20,-0.003,-0.077 ± 0.119,1 of 14,0.011,< 0.01 in 13 of 14
+"MPC, balanced only",3 of 5,-0.006,-0.084 ± 0.039,0 of 3,not applicable,< 0.01 in 3 of 3
+"Fuzzy, cold cluster",11 of 20,+0.002,-0.279 ± 0.128,0 of 11,0.001,< 0.01 in 11 of 11
+"PID, cold cluster",1 of 20,+0.022,-0.418,0 of 1,not applicable,< 0.01 in 1 of 1
+"MPC, extraction priority",5 of 5,+0.005,-0.033 ± 0.122,2 of 5,0.625,< 0.01 in 4 of 5

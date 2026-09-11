@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+# checkpoints are large; see docs/REPRODUCING.md for what is committed and what is released
+# as a versioned archive instead
+results/**/ckpt_*.pt
+!results/runs_multiseed/**/selection_protocol.json

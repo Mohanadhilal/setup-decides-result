@@ -1,0 +1,12 @@
+# Identical for SAC, TD3 and PPO, so that Table 7 isolates the algorithm.
+steps: 150000
+warmup_steps: 5000
+checkpoint_every: 10000
+batch_size: 256
+replay_capacity: 300000
+learning_rate: 2.0e-4
+gamma: 0.99
+tau: 0.005
+hidden_units: [256, 256]
+ppo_rollout: 2048                   # on-policy; the step budget is unchanged
+reward_scalarization: linear        # u_w = w . r[0:3] + r[3]; see morl_score.py

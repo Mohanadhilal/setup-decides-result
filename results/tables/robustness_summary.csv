@@ -1,0 +1,28 @@
+scenario,controller,n,peak_mean,peak_P95,peak_worst,dev_mean,dev_worst,t_out_pct,seeds_left_window,cc_drop_mean,cc_drop_worst,settle_dev,recovery_worst
+quality,MORL-SAC (all runs),100,0.914,5.079,5.838,4.006,9.338,7.33,29,0.656,1.373,1.527,800.0
+quality,MORL-SAC run0,20,4.545,5.578,5.838,8.045,9.338,35.26,20,0.379,0.397,3.509,800.0
+quality,MORL-SAC run1,20,0.027,0.134,0.15,3.473,3.65,1.42,9,0.618,0.699,1.586,800.0
+quality,MORL-SAC run2,20,0.0,0.0,0.0,3.367,3.622,0.0,0,1.258,1.373,1.034,never left
+quality,MORL-SAC run3,20,0.0,0.0,0.0,2.24,2.46,0.0,0,0.499,0.555,0.83,never left
+quality,MORL-SAC run4,20,0.0,0.0,0.0,2.905,4.116,0.0,0,0.525,0.623,0.677,never left
+quality,PID,20,0.0,0.0,0.0,1.298,1.334,0.0,0,0.186,0.187,0.491,never left
+quality,MPC,20,0.0,0.0,0.0,0.213,0.22,0.0,0,0.182,0.182,0.123,never left
+quality,Fuzzy,20,0.0,0.0,0.0,1.474,1.532,0.0,0,0.176,0.177,0.492,never left
+pressure,MORL-SAC (all runs),100,0.0,0.0,0.012,2.843,3.512,0.01,1,0.572,0.717,2.206,40.0
+pressure,MORL-SAC run0,20,0.0,0.0,0.0,3.076,3.322,0.0,0,0.64,0.717,2.478,never left
+pressure,MORL-SAC run1,20,0.0,0.0,0.0,3.082,3.132,0.0,0,0.507,0.52,2.39,never left
+pressure,MORL-SAC run2,20,0.0,0.0,0.0,2.664,3.079,0.0,0,0.523,0.553,2.09,never left
+pressure,MORL-SAC run3,20,0.0,0.0,0.0,2.33,2.465,0.0,0,0.518,0.532,1.525,never left
+pressure,MORL-SAC run4,20,0.001,0.001,0.012,3.064,3.512,0.04,1,0.673,0.716,2.545,40.0
+pressure,PID,20,0.0,0.0,0.0,1.302,1.337,0.0,0,0.186,0.187,0.491,never left
+pressure,MPC,20,0.0,0.0,0.0,0.214,0.222,0.0,0,0.182,0.182,0.124,never left
+pressure,Fuzzy,20,0.0,0.0,0.0,1.476,1.533,0.0,0,0.176,0.177,0.492,never left
+combined,MORL-SAC (all runs),100,0.915,5.079,5.837,4.002,9.337,7.33,29,0.655,1.374,1.528,800.0
+combined,MORL-SAC run0,20,4.546,5.578,5.837,8.046,9.337,35.2,20,0.379,0.396,3.509,800.0
+combined,MORL-SAC run1,20,0.027,0.129,0.155,3.476,3.655,1.44,9,0.616,0.693,1.591,800.0
+combined,MORL-SAC run2,20,0.0,0.0,0.0,3.361,3.616,0.0,0,1.257,1.374,1.035,never left
+combined,MORL-SAC run3,20,0.0,0.0,0.0,2.24,2.46,0.0,0,0.499,0.555,0.83,never left
+combined,MORL-SAC run4,20,0.0,0.0,0.0,2.888,4.098,0.0,0,0.525,0.623,0.676,never left
+combined,PID,20,0.0,0.0,0.0,1.302,1.337,0.0,0,0.186,0.187,0.491,never left
+combined,MPC,20,0.0,0.0,0.0,0.214,0.222,0.0,0,0.182,0.182,0.124,never left
+combined,Fuzzy,20,0.0,0.0,0.0,1.476,1.533,0.0,0,0.176,0.177,0.492,never left

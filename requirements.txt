@@ -1,0 +1,8 @@
+# Pinned to the versions used for the results reported in the paper.
+# Replace the <FILL IN> entries with the output of `pip freeze` on the machine
+# that produced the runs, so the pins are true rather than aspirational.
+numpy==<FILL IN>
+scipy==<FILL IN>
+torch==<FILL IN>
+gymnasium==<FILL IN>
+matplotlib==<FILL IN>

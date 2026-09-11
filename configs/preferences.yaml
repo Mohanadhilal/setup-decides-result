@@ -1,0 +1,7 @@
+# Order is [extraction, energy, concentration]; index is the --prefs argument.
+0: [0.70, 0.10, 0.20]      # extraction priority
+1: [0.50, 0.30, 0.20]
+2: [0.34, 0.33, 0.33]      # balanced; used for the algorithm comparison
+3: [0.20, 0.60, 0.20]      # energy priority
+4: [0.20, 0.20, 0.60]      # concentration priority
+5: [0.29, 0.51, 0.20]      # chosen to interpolate the classical energy band (Section 5.3)

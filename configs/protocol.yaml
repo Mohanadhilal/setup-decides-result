@@ -1,0 +1,24 @@
+# Section 4.4. Three disjoint seed sets; no set is used for more than one purpose.
+seeds:
+  training:   [0, 1, 2, 3, 4]
+  validation: [100, 101, 102, 103, 104, 105, 106, 107, 108, 109]
+  test:       [200, 201, 202, 203, 204, 205, 206, 207, 208, 209,
+               210, 211, 212, 213, 214, 215, 216, 217, 218, 219]
+
+admissibility_gate:                 # applied on EVERY validation seed
+  thermal_window_C: [70.0, 78.0]
+  max_excursion_C: 0.0              # any excursion rejects the checkpoint
+  max_ripple_C: 0.15                # std of T12 over the final window
+
+evaluation:
+  domain_randomize: false           # nominal plant; randomization is for training only
+  enable_disturbance: true
+  averaging_window_steps: 30
+  ripple_window_steps: 50
+  settle_skip_steps: 120            # ignored when scoring safety
+  episode_minutes: 200
+  dt_s: 10.0
+
+energy_objective:                   # Eq. (13)
+  kappa_kg_steam_per_kg_water: 0.30
+  thick_juice_concentration_pct: 65.0
