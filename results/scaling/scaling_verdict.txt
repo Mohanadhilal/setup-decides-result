@@ -1,0 +1,3 @@
+B: preferences not distinct; front narrower than half. Oracle scaling was doing real work: scaling is a precondition for separable preferences, and a deployable controller needs its own scaling procedure. The comparison with the cascade is physical and is reported either way.
+oracle: widths G 0.573 T 5.473 | KW G 0.0087 T 0.0087 | gap -0.179 | admissible 15/15 | safe 0.983
+training: widths G 0.067 T 0.251 | KW G 0.6907 T 0.5655 | gap -0.118 | admissible 15/15 | safe 0.973

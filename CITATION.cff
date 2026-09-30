@@ -1,10 +1,35 @@
 cff-version: 1.2.0
-message: "If you use this code, please cite the paper."
+message: "If you use this code or data, please cite the paper."
 title: "When the Setup Decides the Result: Objective Formulation and Baseline Design in Multi-Objective Reinforcement Learning for Sugar Beet Extraction"
-authors:
-  - family-names: "<FILL IN>"
-    given-names: "<FILL IN>"
-version: "paper-v1"
-date-released: "<FILL IN>"
+type: software
+version: v1.0.0
 license: MIT
-repository-code: "https://github.com/<FILL IN>/<FILL IN>"
+repository-code: "https://github.com/Mohanadhilal/setup-decides-result"
+authors:
+  - given-names: Mohanad Hilal
+    family-names: Alruyshid
+    affiliation: "Imam Alkadhim University College, Wasit, Iraq"
+    email: mohanad.hilal@iku.edu.iq
+  - given-names: Noor Alwan
+    family-names: Malk
+    affiliation: "College of Technical Engineering, University of Kut, Wasit, Iraq"
+  - given-names: Mawj Abdul-Ameer
+    family-names: Al-Murshidawy
+    affiliation: "General Directorate of Education in Wasit, Iraq"
+  - given-names: Omar Farouq
+    family-names: Lutfy
+    affiliation: "College of Artificial Intelligence Engineering, University of Technology-Iraq, Baghdad, Iraq"
+  - given-names: Zainab Abdalhussain
+    family-names: Kareem
+    affiliation: "College of Technical Engineering, University of Kut, Wasit, Iraq"
+preferred-citation:
+  type: article
+  title: "When the Setup Decides the Result: Objective Formulation and Baseline Design in Multi-Objective Reinforcement Learning for Sugar Beet Extraction"
+  journal: "International Journal of Intelligent Engineering and Systems"
+  year: 2026
+  authors:
+    - {given-names: Mohanad Hilal, family-names: Alruyshid}
+    - {given-names: Noor Alwan, family-names: Malk}
+    - {given-names: Mawj Abdul-Ameer, family-names: Al-Murshidawy}
+    - {given-names: Omar Farouq, family-names: Lutfy}
+    - {given-names: Zainab Abdalhussain, family-names: Kareem}

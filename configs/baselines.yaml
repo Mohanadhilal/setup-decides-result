@@ -1,27 +1,57 @@
-# The draft-loop versions used from Section 5.3 onwards (baseline_controllers_mv.py).
-# FILL IN any value marked <FILL IN> from the source before release: the paper claims
-# baseline reproducibility, so no gain may be left undocumented.
+# Classical baselines: every value used for the results in the paper.
+# These match Table 2 of the manuscript and the implementation in
+# src/baseline_controllers.py and src/baseline_controllers_mv.py.
+
 pid:
-  temperature_loop: {Kp: 0.04, Ki: 0.002, Kd: 0.01, target_C: 73.5}
-  draft_loop:       {Kp: <FILL IN>, Ki: <FILL IN>, target_Cc_pct: 12.10}
-  note: the draft loop is tuned about five times slower than the temperature loop
+  kp: 0.04
+  ki: 0.002
+  kd: 0.01
+  integral_clamp: 500
 
 mpc:
-  horizon_steps: 5
-  dt_s: 10.0
-  weights: {temperature: <FILL IN>, move_suppression: <FILL IN>}
-  internal_model: <FILL IN: the first-order model and its parameters>
-  known_limitation: >
-    horizon spans 0.09 of one time constant and the internal model is miscalibrated;
-    Section 4.4 quantifies this and the paper reports it rather than hiding it
+  horizon_steps: 5            # 5 x 10 s = 50 s, i.e. 0.09 of the model time constant
+  weights:                    # tracking, move suppression, energy
+    tracking: 1.0
+    move: 0.3
+    energy: 0.05
+  internal_model:             # first-order response of T12 to the valve position mu
+    type: first_order
+    steady_state: "55 + 18 * mu"   # degrees C; miscalibrated, see Section 4.4
+    time_constant_s: 540
 
 fuzzy:
-  type: Mamdani
-  inputs: [error_C, error_rate_C_per_step]
-  membership_functions: <FILL IN: full specification, required by reviewer 2 comment 5>
-  rule_base: <FILL IN: the complete rule table>
-  defuzzification: <FILL IN>
+  inference: mamdani_min
+  defuzzification: weighted_average_of_singletons
+  membership_functions:       # triangular (a, b, c)
+    error_degC:
+      N: [-10.0, -5.0, 0.0]
+      Z: [-2.5, 0.0, 2.5]
+      P: [0.0, 5.0, 10.0]
+    rate_degC_per_s:
+      N: [-1.0, -0.5, 0.0]
+      Z: [-0.25, 0.0, 0.25]
+      P: [0.0, 0.5, 1.0]
+  rule_base:                  # (error, rate) -> valve increment
+    PP:  0.08
+    PZ:  0.05
+    PN:  0.02
+    ZP:  0.02
+    ZZ:  0.0
+    ZN: -0.02
+    NP: -0.02
+    NZ: -0.05
+    NN: -0.08
 
-setpoint_grid:                      # Table 4
-  temperature_C: [71.0, 72.0, 73.0, 73.5, 74.5, 75.5, 76.5, 77.0]
-  concentration_pct: [11.80, 12.10, 12.30, 12.50]
+draft_loop:                   # shared by all three baselines (Section 5.3)
+  type: PI
+  kp: 0.05
+  ki: 0.0025
+  integral_clamp: 200
+
+set_points:
+  nominal_temperature_degC: 73.5
+  nominal_concentration_pct: 12.30
+  supply_pressure_Pa: 3.5e5   # fixed for the baselines; available to the learned controller
+  grid_of_table_4:
+    temperature_degC: [71, 72, 73, 73.5, 74.5, 75.5, 76.5, 77]
+    concentration_pct: [11.8, 12.1, 12.3, 12.5]

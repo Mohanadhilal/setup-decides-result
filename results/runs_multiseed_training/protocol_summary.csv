@@ -1,0 +1,4 @@
+algo,pref_i,preference,n,runs_without_admissible,test_score_mean,test_score_sd,G_total_mean,G_total_sd,Gp_mean,Gp_sd,Cc_mean,Cc_sd,T12_mean,T12_sd,extraction_mean,extraction_sd,ripple_mean,ripple_sd,offset_mean,offset_sd,safe_seed_frac_test_mean,safe_seed_frac_test_sd,max_viol_test_worst
+SAC,0,"[0.7, 0.1, 0.2]",5,0,715.0911,4.0283,2.0267,0.1072,0.9194,0.1428,11.9505,0.3292,71.1234,0.4741,96.434,0.0765,0.0891,0.0113,-0.2967,0.4884,1.0,0.0,0.0
+SAC,2,"[0.34, 0.33, 0.33]",5,0,657.3595,80.922,1.9599,0.1078,0.8558,0.1235,11.9713,0.2417,70.872,0.4944,96.4013,0.0744,0.0874,0.048,0.0296,0.3466,0.95,0.0707,0.282
+SAC,3,"[0.2, 0.6, 0.2]",5,0,655.2143,20.6971,1.9697,0.0857,0.8518,0.0919,11.8503,0.1799,70.9875,0.5468,96.4171,0.0888,0.0936,0.0559,-0.1574,1.2472,0.97,0.0447,0.942

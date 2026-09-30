@@ -18,9 +18,13 @@ else.
 import numpy as np
 
 # ---- must match sugar_extraction_env.py -------------------------------
-EXT_OFFSET, EXT_SCALE = 0.96292, 0.01469
-GT_BASE, GT_SCALE = 2.6737, 0.7629
-CC_TARGET, CC_WIDTH = 12.974, 1.4505
+# Scaling comes from scaling.get_scaling(), so the selection score always uses
+# the same scale the agent was trained on (oracle by default).
+from scaling import get_scaling as _get_scaling
+_S = _get_scaling()
+EXT_OFFSET, EXT_SCALE = _S["ext_off"], _S["ext_sc"]
+GT_BASE, GT_SCALE = _S["gt_base"], _S["gt_sc"]
+CC_TARGET, CC_WIDTH = _S["cc_target"], _S["cc_width"]
 T_LO, T_HI = 70.0, 78.0                  # thermal window
 
 KAPPA = 0.30        # kg steam per kg water evaporated

@@ -1,12 +1,20 @@
-# Identical for SAC, TD3 and PPO, so that Table 7 isolates the algorithm.
-steps: 150000
-warmup_steps: 5000
-checkpoint_every: 10000
+# Learner settings used for every learned-controller result (Table 2).
+algorithm: vector-critic SAC, twin critics
+network: 2 x 256, ReLU
+optimizer: {name: Adam, learning_rate: 2.0e-4}
 batch_size: 256
-replay_capacity: 300000
-learning_rate: 2.0e-4
-gamma: 0.99
-tau: 0.005
-hidden_units: [256, 256]
-ppo_rollout: 2048                   # on-policy; the step budget is unchanged
-reward_scalarization: linear        # u_w = w . r[0:3] + r[3]; see morl_score.py
+replay_buffer: 1000000
+discount: 0.99
+target_smoothing: 0.005
+entropy_temperature: {mode: auto, target: -3}
+log_std_clamp: [-20, 2]
+warmup_steps: 5000
+budget_steps: {fixed_weight: 150000, conditioned: 400000}
+checkpoint_every: 10000
+tchebycheff_augmentation: 0.05
+integration: {step_s: 10, method: RK4, episode_min: 200, episode_steps: 1200}
+disturbances:
+  training: [drift, pressure, domain_randomization]
+  evaluation: [drift, pressure]
+objective_scaling:
+  default: oracle            # set MORL_SCALING=training for the Section 5.2 experiment

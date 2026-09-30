@@ -29,6 +29,7 @@ import numpy as np
 import gymnasium as gym
 from gymnasium import spaces
 from sugar_extraction_model import SugarExtractionModel
+from scaling import get_scaling
 
 
 
@@ -48,6 +49,9 @@ class SugarExtractionEnv(gym.Env):
         self._seed = seed
 
         self.model = SugarExtractionModel(m=m, seed=seed)
+        # Objective scaling: oracle by default (the submitted results), or derived
+        # from training data only, selected by the MORL_SCALING environment variable.
+        self._S = get_scaling()
 
         # --- Action space: 3 continuous, normalized to [-1,1] ---
         self.action_space = spaces.Box(low=-1.0, high=1.0, shape=(3,),
@@ -145,7 +149,8 @@ class SugarExtractionEnv(gym.Env):
         # Rescaled so each objective spans a comparable range over the
         # achievable operating region; otherwise equal preference weights
         # do not produce balanced behaviour.
-        r_extraction = (extraction - 0.96292) / 0.01469
+        S = self._S
+        r_extraction = (extraction - S["ext_off"]) / S["ext_sc"]
         # --- Plant-level energy -------------------------------------------
         # Sugar output is fixed by the beet feed and the extraction
         # efficiency. Diluting the juice adds no product, it only adds water
@@ -164,8 +169,8 @@ class SugarExtractionEnv(gym.Env):
 
         # Rescaled over the attainable range of G_total (about 1.95 to 2.77)
         # so this objective spans the same magnitude as the extraction one.
-        r_energy = (2.6737 - G_total) / 0.7629
-        r_conc = np.exp(-((Cc - 12.974) / 1.4505) ** 2)
+        r_energy = (S["gt_base"] - G_total) / S["gt_sc"]
+        r_conc = np.exp(-((Cc - S["cc_target"]) / S["cc_width"]) ** 2)
 
         # Hinge penalty: linear + quadratic. The linear term gives a non-zero
         # gradient exactly at the boundary, so shaving the limit is never

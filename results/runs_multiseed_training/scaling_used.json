@@ -1,0 +1,26 @@
+{
+  "ext_off": 0.5987564876109187,
+  "ext_sc": 0.378810694938552,
+  "gt_base": 2.9151786501349717,
+  "gt_sc": 1.3000585882403355,
+  "cc_target": 12.394023337921848,
+  "cc_width": 3.9164131351316662,
+  "source": "training data: warm-up replay, seeds [0, 1, 2, 3, 4], 5000 random-action steps each, domain randomization on, percentiles 2.5-97.5",
+  "n_samples": 25000,
+  "raw_ranges": {
+    "extraction": [
+      0.5987564876109187,
+      0.9775671825494707
+    ],
+    "G_total": [
+      1.6151200618946362,
+      2.9151786501349717
+    ],
+    "Cc": [
+      8.477610202790181,
+      12.394023337921848
+    ]
+  },
+  "created": "2026-09-28T20:24:53",
+  "mode": "training"
+}

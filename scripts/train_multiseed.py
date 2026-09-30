@@ -63,7 +63,7 @@ RHO           = 0.05       # Tchebycheff augmentation
 T_LO, T_HI   = 70.0, 78.0  # thermal safety window (steady-state gate)
 SS_WINDOW    = 50          # last N steps define steady state
 
-OUT_DIR      = "runs_multiseed"
+OUT_DIR      = os.environ.get("MORL_OUT_DIR", "runs_multiseed")   # separate folder per scaling
 TORCH_THREADS_PER_WORKER = 1
 
 # ============================================================================
@@ -366,6 +366,11 @@ if __name__ == "__main__":
     ap.add_argument("--mock", action="store_true", help="30-second self-test with fake env/agent")
     ap.add_argument("--aggregate-only", action="store_true")
     args = ap.parse_args()
+    # provenance: record which objective scaling produced this folder
+    from scaling import get_scaling as _gs
+    os.makedirs(OUT_DIR, exist_ok=True)
+    _sc = _gs(); json.dump(_sc, open(os.path.join(OUT_DIR, 'scaling_used.json'), 'w'), indent=2)
+    print(f"objective scaling: {_sc['mode']}  ->  {OUT_DIR}")
     if args.mock: OUT_DIR = "runs_mock"; install_mock()
     if args.aggregate_only: aggregate(); sys.exit(0)
 

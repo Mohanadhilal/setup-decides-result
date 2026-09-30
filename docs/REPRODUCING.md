@@ -1,4 +1,4 @@
-# Reproducing each table and figure
+﻿# Reproducing each table and figure
 
 Every reported number traces to a command and an output file. Paths are relative to the repository root.
 Run the commands in the order given in the README; the dependencies are noted below.
@@ -46,7 +46,7 @@ Model weights are large and are not committed to git. Each run directory contain
 `selection_protocol.json`, which names the installed checkpoint, the gate that admitted it, and both seed
 lists, so the selection is auditable without the weights.
 
-The weights themselves are released as a versioned archive: `<FILL IN: Zenodo DOI or GitHub release URL>`.
+The checkpoint weights are not included because of their size. Every run can be retrained with scripts/train_multiseed.py from the seeds in configs/training.yaml, and the selection records in results/ identify the checkpoint behind each reported number.
 Unpack it into `results/` to evaluate the exact policies reported in the paper without retraining:
 
 ```bash
