@@ -129,10 +129,19 @@ elif TAG not in tags.split() and "--pre-commit" not in sys.argv:
 if "--remote" in sys.argv:
     rc, out = git("ls-remote", "--tags", "origin")
     if rc != 0: fail("could not reach origin")
-    elif f"refs/tags/{TAG}" not in out: fail(f"tag {TAG} is not on GitHub: run  git push --tags")
+    elif f"refs/tags/{TAG}" not in out: fail(f"tag {TAG} is not on GitHub: run  git push origin {TAG}")
     else:
         rc, local = git("rev-list", "-n", "1", TAG)
         print(f"tag {TAG} -> commit {local}")
+        # The repository's front page shows the default branch, not the tag. If GitHub's main is
+        # behind the tag, a reviewer opening the URL in the paper still sees the old files.
+        rc2, heads = git("ls-remote", "origin", "refs/heads/main")
+        remote_main = heads.split()[0] if heads else ""
+        if remote_main != local:
+            fail(f"GitHub's main is at {remote_main[:7] or 'nothing'}, not at the tagged commit {local[:7]}: "
+                 f"the repository front page still shows the old files. Push the branch (Push origin).")
+        else:
+            print(f"GitHub main -> {remote_main}  (matches the tag)")
 
 print("=" * 72)
 if problems:

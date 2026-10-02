@@ -1,6 +1,7 @@
 # Classical baselines: every value used for the results in the paper.
-# These match Table 2 of the manuscript and the implementation in
-# src/baseline_controllers.py and src/baseline_controllers_mv.py.
+# The values are implemented directly in src/baseline_controllers.py and
+# src/baseline_controllers_mv.py and recorded here; the code does not read
+# this file. They match Table 2 of the manuscript.
 
 pid:
   kp: 0.04
@@ -10,10 +11,10 @@ pid:
 
 mpc:
   horizon_steps: 5            # 5 x 10 s = 50 s, i.e. 0.09 of the model time constant
-  weights:                    # tracking, move suppression, energy
+  weights:                    # as in MPCController(w_track, w_energy, w_move)
     tracking: 1.0
-    move: 0.3
-    energy: 0.05
+    energy: 0.3
+    move: 0.05
   internal_model:             # first-order response of T12 to the valve position mu
     type: first_order
     steady_state: "55 + 18 * mu"   # degrees C; miscalibrated, see Section 4.4
