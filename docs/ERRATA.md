@@ -68,3 +68,22 @@ ensemble.
 The lesson is not that the learned controller is unsafe in general, but that a gate applied to settled
 behaviour cannot detect a transient failure mode, and that a three-seed average cannot detect a mode that
 affects one run in five. Raw per-seed outputs are in `results/tables/robustness_perseed.csv`.
+
+## 8. Table 7: counts and tail pooled inconsistently (found at acceptance)
+The submitted Table 7 counted the seeds leaving the window under the quality-drop
+scenario only (29) while its denominator covered all three scenarios (300), and its
+P95 column averaged the three per-scenario P95 values instead of taking the 95th
+percentile of the pooled runs. Recomputed from `robustness_perseed.csv` with
+`scripts/table7_rebuild.py`: 59 of 300 (29 quality, 29 combined, 1 pressure sag),
+P95 4.978. Direction: it halved the learned controller's violation count.
+
+## 9. Table 8: evaluated on a different path from Table 3 (found at acceptance)
+`reselect_gate_sweep.py` read the training-time `validation.csv` and the training
+evaluator, while Table 3 comes from `validation_protocol.csv` and the unified
+evaluator, so the "used" row did not equal Table 3. Recomputed with
+`scripts/gate_sweep_protocol.py` and `scripts/gate_sweep_all.py` on the final
+protocol; the used row now equals Table 3 by construction, and the scripts check it.
+Direction: the old table overstated the steam saved by relaxing the gate (11
+percent against about 5) and understated its safety cost (test safe fraction 0.88
+against 0.51 with no thermal rule). `reselect_gate_sweep.py` is kept for the record
+and superseded.
