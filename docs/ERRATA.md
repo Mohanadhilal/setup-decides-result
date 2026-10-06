@@ -87,3 +87,13 @@ Direction: the old table overstated the steam saved by relaxing the gate (11
 percent against about 5) and understated its safety cost (test safe fraction 0.88
 against 0.51 with no thermal rule). `reselect_gate_sweep.py` is kept for the record
 and superseded.
+
+### Note to entries 8 and 9 (v1.0.2)
+In v1.0.1, `scripts/gate_sweep_protocol.py` reported the coldest run in the last
+column of Table 8, while the paper reports the least safe run (lowest test safe
+fraction); the two differ in two of the four rows. v1.0.2 reports the least safe
+run and adds `--from-results`, which rebuilds Table 8 from the stored per-run
+results without re-evaluating, and `results/gate_sweep/gate_sweep_protocol_table8.csv`
+is regenerated with it. The outputs of `scripts/table7_rebuild.py` are added under
+`results/table7/`, and its docstring now gives the pooled count as 59, not 58.
+No number reported in the paper changes.

@@ -1,0 +1,26 @@
+TABLE 7, pooled over the three scenarios (what the table reports)
+controller                  n  peak mean     P95   worst   left window  Cc mean  Cc worst
+PID                        60      0.000   0.000   0.000       0 of 60    0.186     0.187
+MPC                        60      0.000   0.000   0.000       0 of 60    0.182     0.182
+Fuzzy                      60      0.000   0.000   0.000       0 of 60    0.176     0.177
+MORL-SAC, all runs        300      0.610   4.978   5.838     59 of 300    0.628     1.374
+MORL-SAC, run 0            60      3.030   5.564   5.838      40 of 60    0.466     0.717
+MORL-SAC, run 1            60      0.018   0.128   0.155      18 of 60    0.580     0.699
+MORL-SAC, runs 2 to 4     180      0.000   0.000   0.012      1 of 180    0.697     1.374
+
+PER-SCENARIO BREAKDOWN, learned controller (for the text of Section 5.5)
+scenario      n  left window  peak mean     P95   worst  Cc mean
+quality     100    29 of 100      0.914   5.079   5.838    0.656
+pressure    100     1 of 100      0.000   0.000   0.012    0.572
+combined    100    29 of 100      0.915   5.079   5.837    0.655
+
+Per run and scenario, seeds leaving the window:
+  MORL-SAC run0  quality: 20 of 20  pressure: 0 of 20  combined: 20 of 20
+  MORL-SAC run1  quality: 9 of 20  pressure: 0 of 20  combined: 9 of 20
+  MORL-SAC run2  quality: 0 of 20  pressure: 0 of 20  combined: 0 of 20
+  MORL-SAC run3  quality: 0 of 20  pressure: 0 of 20  combined: 0 of 20
+  MORL-SAC run4  quality: 0 of 20  pressure: 1 of 20  combined: 0 of 20
+
+combined vs quality, largest per-seed difference: peak 0.0076 deg, Cc drop 0.0064 points
+-> if both are below 0.001, 'reproduces the quality scenario to three decimals' holds for both metrics,
+   and the pooled count is then 2 x the quality count plus any pressure-sag excursions.

@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "If you use this code or data, please cite the paper."
 title: "When the Setup Decides the Result: Objective Formulation and Baseline Design in Multi-Objective Reinforcement Learning for Sugar Beet Extraction"
 type: software
-version: v1.0.1
+version: v1.0.2
 license: MIT
 repository-code: "https://github.com/Mohanadhilal/setup-decides-result"
 authors:

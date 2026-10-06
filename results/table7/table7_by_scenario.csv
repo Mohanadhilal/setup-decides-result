@@ -1,0 +1,4 @@
+scenario,n,peak_mean,peak_P95,peak_worst,left,cc_mean,cc_worst
+quality,100,0.914,5.079,5.838,29,0.656,1.373
+pressure,100,0.0,0.0,0.012,1,0.572,0.717
+combined,100,0.915,5.079,5.837,29,0.655,1.374

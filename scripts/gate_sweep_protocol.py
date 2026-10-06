@@ -16,6 +16,7 @@ Run from the project folder (same place as reeval_protocol.py), after
 reeval_protocol.py --stage select has been run:
 
     python gate_sweep_protocol.py --pref 3 --algos SAC --workers 5
+    python gate_sweep_protocol.py --pref 3 --from-results results/gate_sweep/gate_sweep_all_results.csv
 
 Writes gate_sweep_protocol_results.csv and gate_sweep_protocol_table8.csv and
 prints Table 8 together with the Table 3 row it must match.
@@ -82,35 +83,47 @@ def process_run(job):
     return out
 
 
+def build_table8(res):
+    """Table 8 from per-run results. The last column is the LEAST SAFE run (lowest test
+    safe fraction, ties broken by the lower temperature), as the paper reports it."""
+    table = []
+    print("\nTable 8, rebuilt on the final protocol (mean +- sd over the five runs, test seeds)")
+    print(f"{'rule':46s}{'Gp, kg/s':>16}{'T12, C':>16}{'safe frac':>11}{'least safe run T12/safe':>25}")
+    for rule in RULES:
+        g = [r for r in res if r["rule"] == rule]
+        Gp = np.array([float(r["Gp"]) for r in g]); T = np.array([float(r["T12"]) for r in g])
+        sf = np.array([float(r["safe_seed_frac_test"]) for r in g])
+        least = min(g, key=lambda r: (float(r["safe_seed_frac_test"]), float(r["T12"])))
+        row = dict(rule=LABEL[rule], Gp_mean=round(Gp.mean(), 3), Gp_sd=round(Gp.std(ddof=1), 3),
+                   T12_mean=round(T.mean(), 2), T12_sd=round(T.std(ddof=1), 2),
+                   safe_frac=round(sf.mean(), 2), least_safe_T12=round(float(least["T12"]), 2),
+                   least_safe_frac=round(float(least["safe_seed_frac_test"]), 2),
+                   runs_rule_unsatisfiable=sum(1 for r in g if str(r["rule_satisfiable"]) in ("False", "false", "0")))
+        table.append(row)
+        print(f"{row['rule']:46s}{row['Gp_mean']:>8.3f} +- {row['Gp_sd']:<5.3f}{row['T12_mean']:>8.2f} +- {row['T12_sd']:<5.2f}"
+              f"{row['safe_frac']:>11.2f}{row['least_safe_T12']:>15.2f} / {row['least_safe_frac']:<5.2f}")
+    return table
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--pref", type=int, default=3)
     ap.add_argument("--algos", nargs="*", default=["SAC"])
     ap.add_argument("--seeds", nargs="*", type=int, default=list(tm.TRAIN_SEEDS))
     ap.add_argument("--workers", type=int, default=1)
+    ap.add_argument("--from-results", default=None,
+                    help="rebuild Table 8 from a stored per-run CSV without re-evaluating anything")
     a = ap.parse_args()
+    if a.from_results:
+        res = [r for r in csv.DictReader(open(a.from_results)) if int(r["pref_i"]) == a.pref and r["algo"] in a.algos]
+        tm.write_csv("gate_sweep_protocol_table8.csv", build_table8(res))
+        return
     jobs = [(al, a.pref, s) for al in a.algos for s in a.seeds]
     with Pool(a.workers) as p:
         res = [r for rr in p.map(process_run, jobs) for r in rr]
     tm.write_csv("gate_sweep_protocol_results.csv", res)
 
-    # ---- Table 8 ----
-    table = []
-    print("\nTable 8, rebuilt on the final protocol (mean +- sd over the five runs, test seeds)")
-    print(f"{'rule':46s}{'Gp, kg/s':>16}{'T12, C':>16}{'safe frac':>11}{'worst run T12/safe':>20}{'unsat':>7}")
-    for rule in RULES:
-        g = [r for r in res if r["rule"] == rule]
-        Gp = np.array([r["Gp"] for r in g]); T = np.array([r["T12"] for r in g])
-        sf = np.array([r["safe_seed_frac_test"] for r in g])
-        worst = min(g, key=lambda r: r["T12"])
-        row = dict(rule=LABEL[rule], Gp_mean=round(Gp.mean(), 3), Gp_sd=round(Gp.std(ddof=1), 3),
-                   T12_mean=round(T.mean(), 2), T12_sd=round(T.std(ddof=1), 2),
-                   safe_frac=round(sf.mean(), 2), worst_T12=round(worst["T12"], 2),
-                   worst_safe=round(worst["safe_seed_frac_test"], 2),
-                   runs_rule_unsatisfiable=sum(1 for r in g if not r["rule_satisfiable"]))
-        table.append(row)
-        print(f"{row['rule']:46s}{row['Gp_mean']:>8.3f} +- {row['Gp_sd']:<5.3f}{row['T12_mean']:>8.2f} +- {row['T12_sd']:<5.2f}"
-              f"{row['safe_frac']:>11.2f}{row['worst_T12']:>12.2f} / {row['worst_safe']:<5.2f}{row['runs_rule_unsatisfiable']:>7}")
+    table = build_table8(res)
     tm.write_csv("gate_sweep_protocol_table8.csv", table)
 
     # ---- the row Table 3 reports for the same preference, from protocol_results.csv ----

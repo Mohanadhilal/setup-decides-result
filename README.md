@@ -7,7 +7,7 @@ Code, configurations, seeds and raw per-seed outputs for:
 > Multi-Objective Reinforcement Learning for Sugar Beet Extraction",
 > *International Journal of Intelligent Engineering and Systems*, 2026.
 
-Every number in the paper was produced by the code at tag **`v1.0.1`**. The exact
+Every number in the paper was produced by the code at tag **`v1.0.2`**. The exact
 commit is given in the paper's Code and data availability section.
 
 ## Contents
@@ -32,7 +32,7 @@ in `src/` uses.
 ```bash
 git clone https://github.com/Mohanadhilal/setup-decides-result.git
 cd setup-decides-result
-git checkout v1.0.1
+git checkout v1.0.2
 python -m venv .venv
 .venv\Scripts\activate          # Linux/macOS: source .venv/bin/activate
 pip install -r requirements.txt

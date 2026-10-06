@@ -5,7 +5,8 @@ table7_rebuild.py
 Editor's point 2: Table 7 gave "29 of 300" seeds leaving the window, but the
 29 were counted under the quality-drop scenario alone while the denominator
 covered all three scenarios. If the combined scenario reproduces the quality
-scenario, it contributes its own violations and the pooled count is 58.
+scenario, it contributes its own violations; with the single pressure-sag excursion of
+0.012 degrees the pooled count is 59 (29 quality, 29 combined, 1 pressure sag).
 
 This script recomputes every Table 7 cell from robustness_perseed.csv with the
 pooling stated explicitly, and prints the per-scenario breakdown the text
@@ -58,12 +59,15 @@ def main():
     with open("table7_rebuilt.csv", "w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=list(out[0])); w.writeheader(); w.writerows(out)
 
+    by_scen = []
     print("\nPER-SCENARIO BREAKDOWN, learned controller (for the text of Section 5.5)")
     print(f"{'scenario':10s}{'n':>5}{'left window':>13}{'peak mean':>11}{'P95':>8}{'worst':>8}{'Cc mean':>9}")
     for s in SCEN:
         sel = [r for r in rows if r["scenario"] == s and r["controller"].startswith("MORL")]
-        g = agg(sel, s)
+        g = agg(sel, s); by_scen.append(dict(scenario=s, **{k: v for k, v in g.items() if k != "controller"}))
         print(f"{s:10s}{g['n']:>5}{str(g['left'])+' of '+str(g['n']):>13}{g['peak_mean']:>11.3f}{g['peak_P95']:>8.3f}{g['peak_worst']:>8.3f}{g['cc_mean']:>9.3f}")
+    with open("table7_by_scenario.csv", "w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=list(by_scen[0])); w.writeheader(); w.writerows(by_scen)
     print("\nPer run and scenario, seeds leaving the window:")
     for c in learned:
         print(f"  {c:14s}", "  ".join(f"{s}: {sum(1 for r in rows if r['controller']==c and r['scenario']==s and r['peak_excursion']>0)} of "
@@ -75,7 +79,7 @@ def main():
     d_cc = max(abs(q[k]["cc_drop"] - c[k]["cc_drop"]) for k in q if k in c)
     print(f"\ncombined vs quality, largest per-seed difference: peak {d_peak:.4f} deg, Cc drop {d_cc:.4f} points")
     print("-> if both are below 0.001, 'reproduces the quality scenario to three decimals' holds for both metrics,")
-    print("   and the pooled count must then be 2 x the quality count.")
+    print("   and the pooled count is then 2 x the quality count plus any pressure-sag excursions.")
 
 
 if __name__ == "__main__":

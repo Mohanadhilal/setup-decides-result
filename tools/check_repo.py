@@ -16,7 +16,7 @@ Exit code 0 means ready; anything else lists what must be fixed.
 """
 import ast, os, re, subprocess, sys
 
-TAG = "v1.0.1"
+TAG = "v1.0.2"
 PLACEHOLDER = re.compile(r"<\s*FILL|\bFILL[\s_-]+IN\b|\bTODO\b|\bTBD\b|\bXXX\b", re.I)
 TEXT_EXT = {".py", ".md", ".txt", ".yaml", ".yml", ".cff", ".json", ".csv", ".ps1", ".sh", ""}
 SKIP_DIRS = {".git", ".venv", "venv", "__pycache__", "node_modules"}
@@ -100,7 +100,7 @@ for mod in sorted(used):
     if mod in PIP and PIP[mod] not in req:
         fail(f"requirements.txt lacks '{PIP[mod]}' (imported as '{mod}')")
 
-# 5. tag consistency in text: the paper and README cite v1.0.1, nothing else
+# 5. tag consistency in text: the paper and README cite v1.0.2, nothing else
 for p in ("README.md", "CITATION.cff"):
     if os.path.exists(p):
         s = open(p, encoding="utf-8-sig").read()
